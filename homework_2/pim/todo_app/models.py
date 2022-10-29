@@ -19,9 +19,12 @@ class ToDoList(models.Model):
 class ToDoItem(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=True)
-    created_date = models.DateTimeField(auto_now_add=True)
+    created_date = models.DateTimeField(auto_now_add=True, null=False)
     due_date = models.DateTimeField(default=one_week_hence)
+    status = models.CharField(max_length=50, choices=("CREATED", "CREATED"), ("FINISHED", "FINISHED"), default="CREATED"
     todo_list = models.ForeignKey(ToDoList, on_delete=models.CASCADE)
+    priority = models.IntegerField()
+
 
     def get_absolute_url(self):
         return reverse(
